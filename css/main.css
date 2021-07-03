@@ -41,7 +41,29 @@
 .schedule h1 {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  display: inline-block;
 }
 select {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.fall-schedule {
+  width: 600px;
+  height: 300px;
+  border: solid;
+}
+.winter-schedule {
+  width: 600px;
+  height: 300px;
+  border: solid;
+}
+.save {
+  margin-left: 300px;
+  width: 60px;
+  background-color: midnightblue;
+  color: white;
+  cursor: pointer;
+}
+.save:hover {
+  color: midnightblue;
+  background-color: white;
 }
