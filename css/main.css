@@ -48,15 +48,30 @@
   background-color: rgb(120, 120, 206);
   color: white;
 }
-.schedule {
+.bottom {
+  top: 200;
+}
+.course {
   margin-top: 250px;
-  margin-left: 500px;
+  margin-left: 50px;
+  display: inline-block;
+}
+.course h1 {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  display: inline-block;
+  width: 300px;
+}
+.schedule {
+  margin-left: 55%;
   margin-right: 10px;
+  display: inline-block;
 }
 .schedule h1 {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   display: inline-block;
+  width: 300px;
 }
 select {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -69,12 +84,12 @@ select {
 }
 .save {
   margin: 10px;
-  margin-left: 80px;
+  margin-left: 300px;
   width: 60px;
   background-color: midnightblue;
   color: white;
   cursor: pointer;
-  width: 80px;
+  width: 200px;
   height: 25px;
   border: none;
   transition: all 0.3s ease;
