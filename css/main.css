@@ -8,6 +8,7 @@
   background-color: midnightblue;
   overflow-x: hidden;
   padding-top: 20px;
+  text-align: center;
 }
 .topbar h1 {
   padding: 6px 8px 6px 16px;
@@ -48,12 +49,9 @@
   background-color: rgb(120, 120, 206);
   color: white;
 }
-.bottom {
-  top: 200;
-}
 .course {
-  margin-top: 250px;
   margin-left: 50px;
+  margin-right: 50px;
   display: inline-block;
 }
 .course h1 {
@@ -61,30 +59,37 @@
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   display: inline-block;
   width: 300px;
+  margin-left: 50px;
+  margin-right: 50px;
 }
 .schedule {
-  margin-left: 55%;
-  margin-right: 10px;
   display: inline-block;
+  margin-left: 50px;
+  margin-right: 50px;
 }
 .schedule h1 {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   display: inline-block;
   width: 300px;
+  margin-left: 100px;
+  margin-right: 50px;
 }
 select {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 .fall-schedule,
 .winter-schedule {
-  width: 500px;
+  width: 550px;
   height: 300px;
   border: solid;
+  margin-left: 100px;
+  margin-right: 50px;
 }
 .save {
-  margin: 10px;
-  margin-left: 300px;
+  margin-top: 250px;
+  margin-left: 1100px;
+  margin-bottom: 0px;
   width: 60px;
   background-color: midnightblue;
   color: white;
@@ -97,4 +102,16 @@ select {
 .save:hover {
   color: midnightblue;
   background-color: white;
+}
+.bottom:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.sections {
+  width: 550px;
+  height: 685px;
+  border: solid;
+  margin-left: 50px;
+  margin-right: 50px;
 }
