@@ -81,7 +81,7 @@ select {
 .fall-schedule,
 .winter-schedule {
   width: 550px;
-  height: 300px;
+  height: 550px;
   border: solid;
   margin-left: 100px;
   margin-right: 50px;
@@ -110,8 +110,20 @@ select {
 }
 .sections {
   width: 550px;
-  height: 685px;
+  height: 1190px;
   border: solid;
   margin-left: 50px;
   margin-right: 50px;
+}
+table,
+th,
+td {
+  width: 550px;
+  border: 1px solid black;
+  border-collapse: collapse;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+table {
+  height: 550px;
 }
