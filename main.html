@@ -12,21 +12,21 @@
         <h1>&#9200 U of T Timetable &#9200</h1>
         <div class="search">
             <h3>Which course do you want to add?</h3>
-            <input type="text" placeholder="At least three characters please">
-            <button type="submit">Search</button>
+            <input id="course" type="text" placeholder="At least three characters please">
+            <button type="submit" onclick="findSection">Search</button>
         </div>
     </div>
     <button class="save">Save the schedule in PDF!</button>
     <div style="display:block; width:1159px;">
-        <div style="width:50%; float:left; display: inline-block;">
+        <div style="width:50%; float:left;">
             <div class="course">
                 <h1>All Sections</h1>
                 <div class="sections">
-    
+                    
                 </div>
             </div>
         </div>
-        <div style="width:50%; float:left; display: inline-block;">
+        <div style="width:50%; float:left;">
             <div class="schedule">
             
                 <h1>Fall 2021</h1>
@@ -298,5 +298,6 @@
             </div>
         </div>
       </div>
+      <script src="js/data.js"></script>
 </body>
 </html>
