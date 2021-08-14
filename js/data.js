@@ -71,5 +71,80 @@ $.getJSON("data/csc_courses.json", function(json) {
 // Functions
 function findSection() {
     var course_code = document.getElementById('course');
+    // Find the courses that match with the input value
+    let result = [];
+    json_file.forEach(element => {
+      var course_name = element.course;
+      if (course_name.includes(course_code.value.toUpperCase())) {
+        result.push(element);
+      }
+    });
+
+    console.log(result);
+    // Display all the sections in the box
+    var sections = document.getElementById('sections');
+    result.forEach(section => {
+
+      section.lectures.forEach(lec => {
+        // the whole card
+        var card = document.createElement('div');
+
+        // lecture section name
+        var name = document.createElement('a');
+        name.innerHTML = lec.sec_name;
+
+        // Which semester
+        var semester = document.createElement('a');
+        semester.innerHTML = section.section;
+
+        // lecture delivery mode
+        var delivery = document.createElement('a');
+        delivery.innerHTML = lec.delivery;
+
+        // add button
+        var button = document.createElement('button');
+        button.innerHTML = "add";
+
+        // add all the components to the entire card
+        card.appendChild(name);
+        card.appendChild(semester);
+        card.appendChild(delivery);
+        card.appendChild(button);
+
+        // add the card to the section display
+        sections.appendChild(card);
+      });
+
+      section.tutorials.forEach(tut => {
+        // the whole card
+        var card = document.createElement('div');
+
+        // lecture section name
+        var name = document.createElement('a');
+        name.innerHTML = tut.sec_name;
+
+        // Which semester
+        var semester = document.createElement('a');
+        semester.innerHTML = section.section;
+
+        // lecture delivery mode
+        var delivery = document.createElement('a');
+        delivery.innerHTML = tut.delivery;
+
+        // add button
+        var button = document.createElement('button');
+        button.innerHTML = "add";
+
+        // add all the components to the entire card
+        card.appendChild(name);
+        card.appendChild(semester);
+        card.appendChild(delivery);
+        card.appendChild(button);
+
+        // add the card to the section display
+        sections.appendChild(card);
+      })
+      
+    })
 }
 

@@ -108,7 +108,7 @@ select {
   display: table;
   clear: both;
 }
-.sections {
+#sections {
   width: 550px;
   height: 1190px;
   border: solid;
