@@ -162,6 +162,7 @@ function findSection() {
         })
         
         schedule.innerHTML = text;
+        schedule.style.fontSize = "12px";
 
         // add button
         var button = document.createElement('button');
