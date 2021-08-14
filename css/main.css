@@ -111,7 +111,6 @@ select {
 #sections {
   width: 550px;
   height: 1190px;
-  border: solid;
   margin-left: 50px;
   margin-right: 50px;
 }
@@ -126,4 +125,45 @@ td {
 }
 table {
   height: 550px;
+}
+.card {
+  margin: 5px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  box-shadow: 1px 2px 3px grey;
+  font-size: 13px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: normal;
+}
+.card a {
+  margin-left: 25px;
+  margin-right: 15px;
+  vertical-align: middle;
+}
+.card div {
+  margin-left: 25px;
+  margin-right: 10px;
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
+.card button {
+  margin: 10px;
+  width: 70px;
+  height: 30px;
+  background-color: midnightblue;
+  color: white;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+.card button:hover {
+  color: midnightblue;
+  background-color: white;
 }

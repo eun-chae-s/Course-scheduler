@@ -14,11 +14,11 @@ $.getJSON("data/csc_courses.json", function(json) {
         let str = all_sections[meeting].online;
       
         if (str.includes("Online - Synchronous")) {
-          online = "Online - Synchronous";
+          online = "Online (S)";
         } else if (str.includes("In Person")) {
           online = "In Person";
         } else {
-          online = "Asynchronous";
+          online = "Online (A)";
         }
 
         // Section schedule - tag
@@ -83,12 +83,15 @@ function findSection() {
     console.log(result);
     // Display all the sections in the box
     var sections = document.getElementById('sections');
+    sections.innerHTML = "";
     result.forEach(section => {
 
       section.lectures.forEach(lec => {
         // the whole card
         var card = document.createElement('div');
-
+        card.className = "card";
+        card.style.backgroundColor = "#fff0f8";
+        
         // lecture section name
         var name = document.createElement('a');
         name.innerHTML = lec.sec_name;
@@ -101,6 +104,22 @@ function findSection() {
         var delivery = document.createElement('a');
         delivery.innerHTML = lec.delivery;
 
+        // lecture schedule
+        var schedule = document.createElement('div');
+        let text = '';
+
+        for (let i = 0; i < lec.schedule.length; i++) {
+          var time = lec.schedule[i];
+          if (i < lec.schedule.length - 1) {
+            text += time.Day + ": " + time.Start + " - " + time.End + "<br>";
+          } else {
+            text += time.Day + ": " + time.Start + " - " + time.End;
+          } 
+            
+        }
+        
+        schedule.innerHTML = text;
+
         // add button
         var button = document.createElement('button');
         button.innerHTML = "add";
@@ -109,6 +128,7 @@ function findSection() {
         card.appendChild(name);
         card.appendChild(semester);
         card.appendChild(delivery);
+        card.appendChild(schedule);
         card.appendChild(button);
 
         // add the card to the section display
@@ -118,6 +138,8 @@ function findSection() {
       section.tutorials.forEach(tut => {
         // the whole card
         var card = document.createElement('div');
+        card.className = "card";
+        card.style.backgroundColor = "#e6eeff";
 
         // lecture section name
         var name = document.createElement('a');
@@ -131,6 +153,16 @@ function findSection() {
         var delivery = document.createElement('a');
         delivery.innerHTML = tut.delivery;
 
+        // lecture schedule
+        var schedule = document.createElement('a');
+        let text = '';
+
+        tut.schedule.forEach(time => {
+          text += time.Day + ": " + time.Start + " - " + time.End;
+        })
+        
+        schedule.innerHTML = text;
+
         // add button
         var button = document.createElement('button');
         button.innerHTML = "add";
@@ -139,6 +171,7 @@ function findSection() {
         card.appendChild(name);
         card.appendChild(semester);
         card.appendChild(delivery);
+        card.appendChild(schedule);
         card.appendChild(button);
 
         // add the card to the section display
