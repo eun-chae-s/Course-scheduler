@@ -7,6 +7,7 @@ var schedule_days = {
   "Thursday": 4, 
   "Friday": 5
 };
+let buttons = {};
 
 // Clean JSON file
 $.getJSON("data/csc_courses.json", function(json) {
@@ -91,6 +92,7 @@ function findSection() {
     // Display all the sections in the box
     var sections = document.getElementById('sections');
     sections.innerHTML = "";
+    buttons = {};
     result.forEach(section => {
 
       for (let i = 0; i < section.lectures.length; i++) {
@@ -130,9 +132,16 @@ function findSection() {
 
         // add button
         var button = document.createElement('button');
-        button.id = "add";
+        button.id = "add-lec" + i;
         button.innerHTML = "add";
-        
+
+        // add all the info to the array
+        buttons["add-lec" + i] = {
+          "name": lec.sec_name,
+          "schedule": lec.schedule,
+          "semester": section.section,
+          "delivery": lec.delivery
+        };
 
         // add all the components to the entire card
         card.appendChild(name);
@@ -143,8 +152,6 @@ function findSection() {
 
         // add the card to the section display
         sections.appendChild(card);
-        
-        button.onclick = this.addCourse(lec, section.section);
       };
 
       for (let j = 0; j < section.tutorials.length; j++) {
@@ -185,9 +192,16 @@ function findSection() {
 
         // add button
         var button = document.createElement('button');
-        button.id = "add";
+        button.id = "add-tut" + j;
         button.innerHTML = "add";
         
+        // add all the info to the array
+        buttons["add-tut" + j] = {
+          "name": tut.sec_name,
+          "schedule": tut.schedule,
+          "semester": section.section,
+          "delivery": tut.delivery
+        };
 
         // add all the components to the entire card
         card.appendChild(name);
@@ -198,67 +212,66 @@ function findSection() {
 
         // add the card to the section display
         sections.appendChild(card);
-
-        // button.onclick = this.addCourse(tut, section.section);
       }
     })
-}
 
+    // find the timeslot and color the cell on the table
+    for (const id in buttons) {
+      var button = document.getElementById(id);
+      button.onclick = () => {
+        // course_code
+        var course = document.getElementById('course');
+        var course_code = course.value.toUpperCase();
 
-// find the timeslot and color the cell on the table
-function addCourse(section, semester) {
-  console.log("success");
-  // course_code
-  var course = document.getElementById('course');
-  var course_code = course.value.toUpperCase();
+        // selected section info
+        var section = buttons[id];
 
-  // selected section info
-  // 1. section name
-  var sec_name = section.sec_name;
+        // 1. section name
+        var sec_name = section.name;
 
-  // 2. section semester
-  var sem = (semester == "F") ? "fall" : (semester == "S") ? "winter" : "both";
+        // 2. section semester
+        var sem = (section.semester == "F") ? "fall" : (section.semester == "S") ? "winter" : "both";
 
-  // 3. section schedule array
-  var schedule = section.schedule;
-  schedule.forEach(time => {
-    var day = time.Day;
-    var start = time.Start;
-    var end = time.End;
-    var start_time = parseInt(start.slice(0, start.indexOf(":")));
-    var end_time = parseInt(end.slice(0, end.indexOf(":")));
-    for (let i = 0; i < end_time - start_time; i++) {
-      if (sem != "both") {
-        var t = document.getElementById(sem);
-        var cell = t.rows[start_time - 7 + i].cells[schedule_days[day]];
-        // if (cell.bgColor != "") {
-        //   alert("Conflicted schedule! Choose another section!");
-        // } else {
-          cell.bgColor = "pink";
-          if (end_time - start_time > 1) {
-            if (i == 0) {
-              cell.innerText = course_code;
-            } 
-            if (i == 1) {
-              cell.innerText = sec_name;
+        // 3. section schedule array
+        var schedule = section.schedule;
+        schedule.forEach(time => {
+          var day = time.Day;
+          var start = time.Start;
+          var end = time.End;
+          var start_time = parseInt(start.slice(0, start.indexOf(":")));
+          var end_time = parseInt(end.slice(0, end.indexOf(":")));
+          for (let i = 0; i < end_time - start_time; i++) {
+            if (sem != "both") {
+              var t = document.getElementById(sem);
+              var cell = t.rows[start_time - 7 + i].cells[schedule_days[day]];
+              // if (cell.bgColor != "") {
+              //   alert("Conflicted schedule! Choose another section!");
+              // } else {
+                cell.bgColor = "pink";
+                if (end_time - start_time > 1) {
+                  if (i == 0) {
+                    cell.innerText = course_code;
+                  } 
+                  if (i == 1) {
+                    cell.innerText = sec_name;
+                  }
+                } else {
+                  cell.innerHTML = course_code + "<br>" + sec_name;
+                }
+
+                // remove the border line
+                if (i > 0) {
+                  cell.style.borderTop = "None";
+                }
+                if (i < end_time - start_time - 1) {
+                  cell.style.borderBottom = "None";
+                }
+              // }
             }
-          } else {
-            cell.innerHTML = course_code + "<br>" + sec_name;
-          }
 
-          // remove the border line
-          if (i > 0) {
-            cell.style.borderTop = "None";
+            // if filled in multiple borders: erase the bottom border line & top border line
           }
-          if (i < end_time - start_time - 1) {
-            cell.style.borderBottom = "None";
-          }
-        // }
-      }
-
-      // if filled in multiple borders: erase the bottom border line & top border line
+        })
+      };
     }
-  })
-
-  
 }
