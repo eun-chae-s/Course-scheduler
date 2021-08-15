@@ -167,3 +167,7 @@ table {
   color: midnightblue;
   background-color: white;
 }
+#fall,
+#winter {
+  box-shadow: 4px 4px 4px black;
+}
