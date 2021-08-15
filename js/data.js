@@ -93,7 +93,8 @@ function findSection() {
     sections.innerHTML = "";
     result.forEach(section => {
 
-      section.lectures.forEach(lec => {
+      for (let i = 0; i < section.lectures.length; i++) {
+        var lec = section.lectures[i];
         // the whole card
         var card = document.createElement('div');
         card.className = "card";
@@ -143,10 +144,11 @@ function findSection() {
         // add the card to the section display
         sections.appendChild(card);
         
-        document.getElementById("add").addEventListener("click", addCourse(lec, section.section));
-      });
+        button.onclick = this.addCourse(lec, section.section);
+      };
 
-      section.tutorials.forEach(tut => {
+      for (let j = 0; j < section.tutorials.length; j++) {
+        var tut = section.tutorials[j];
         // the whole card
         var card = document.createElement('div');
         card.className = "card";
@@ -197,9 +199,8 @@ function findSection() {
         // add the card to the section display
         sections.appendChild(card);
 
-        document.getElementById("add").addEventListener("click", addCourse(tut, section.section));
-      })
-      
+        // button.onclick = this.addCourse(tut, section.section);
+      }
     })
 }
 
@@ -244,6 +245,14 @@ function addCourse(section, semester) {
           } else {
             cell.innerHTML = course_code + "<br>" + sec_name;
           }
+
+          // remove the border line
+          if (i > 0) {
+            cell.style.borderTop = "None";
+          }
+          if (i < end_time - start_time - 1) {
+            cell.style.borderBottom = "None";
+          }
         // }
       }
 
@@ -253,5 +262,3 @@ function addCourse(section, semester) {
 
   
 }
-
-document.getElementById("fall").rows[1].cells[1]
