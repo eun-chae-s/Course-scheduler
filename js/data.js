@@ -1,3 +1,14 @@
+// August 16 To-do list
+// 1. alert function() for conflicted course (even 1 hr different also) (done)
+// 2. different color for the tutorial (done)
+// 3. add delete function
+// 4. display all the added section 
+// 5. coloring for the Y course
+// 6. deal with the course that does not have a time
+// 7. api call 바꾸기
+// 8. save into pdf file function
+
+
 // JSON data into the object
 let json_file = [];
 var schedule_days = {
@@ -132,11 +143,11 @@ function findSection() {
 
         // add button
         var button = document.createElement('button');
-        button.id = "add-lec" + i;
+        button.id = "add-lec" + section.section + i;
         button.innerHTML = "add";
 
         // add all the info to the array
-        buttons["add-lec" + i] = {
+        buttons["add-lec" + section.section + i] = {
           "name": lec.sec_name,
           "schedule": lec.schedule,
           "semester": section.section,
@@ -192,11 +203,11 @@ function findSection() {
 
         // add button
         var button = document.createElement('button');
-        button.id = "add-tut" + j;
+        button.id = "add-tut" + section.section + j;
         button.innerHTML = "add";
         
         // add all the info to the array
-        buttons["add-tut" + j] = {
+        buttons["add-tut" + section.section + j] = {
           "name": tut.sec_name,
           "schedule": tut.schedule,
           "semester": section.section,
@@ -240,37 +251,68 @@ function findSection() {
           var end = time.End;
           var start_time = parseInt(start.slice(0, start.indexOf(":")));
           var end_time = parseInt(end.slice(0, end.indexOf(":")));
+          var alert_called = false;
           for (let i = 0; i < end_time - start_time; i++) {
             if (sem != "both") {
               var t = document.getElementById(sem);
               var cell = t.rows[start_time - 7 + i].cells[schedule_days[day]];
-              // if (cell.bgColor != "") {
-              //   alert("Conflicted schedule! Choose another section!");
-              // } else {
-                cell.bgColor = "pink";
-                if (end_time - start_time > 1) {
-                  if (i == 0) {
-                    cell.innerText = course_code;
-                  } 
-                  if (i == 1) {
-                    cell.innerText = sec_name;
-                  }
-                } else {
-                  cell.innerHTML = course_code + "<br>" + sec_name;
-                }
+              if (cell.bgColor != "") {
+                alert("Conflicted schedule! Choose another section!");
+                alert_called = true;
+                break;
+              }
+            } else {
+              var fall = document.getElementById("fall");
+              var winter = document.getElementById("winter");
 
-                // remove the border line
-                if (i > 0) {
-                  cell.style.borderTop = "None";
-                }
-                if (i < end_time - start_time - 1) {
-                  cell.style.borderBottom = "None";
-                }
-              // }
+              var cell1 = fall.rows[start_time - 7 + i].cells[schedule_days[day]];
+              var cell2 = winter.rows[start_time - 7 + i].cells[schedule_days[day]];
+              if (cell1.bgColor != "" || cell2.bgColor != "") {
+                alert("Conflicted schedule! Choose another section!");
+                alert_called = true;
+                break;
+              }
             }
-
-            // if filled in multiple borders: erase the bottom border line & top border line
           }
+          if (alert_called == false) {
+            for (let i = 0; i < end_time - start_time; i++) {
+              if (sem != "both") {
+                var t = document.getElementById(sem);
+                var cell = t.rows[start_time - 7 + i].cells[schedule_days[day]];
+                if (cell.bgColor != "") {
+                  alert("Conflicted schedule! Choose another section!");
+                } else {
+                  if (id.includes("lec")) {
+                    cell.bgColor = "#fff0f8";
+                  } else if (id.includes("tut")) {
+                    cell.bgColor = "#e6eeff";  // tutorial section
+                  } else {
+                    cell.bgColor = "#c3fc86";
+                  }
+                  
+                  if (end_time - start_time > 1) {
+                    if (i == 0) {
+                      cell.innerText = course_code;
+                    } 
+                    if (i == 1) {
+                      cell.innerText = sec_name;
+                    }
+                  } else {
+                    cell.innerHTML = course_code + "<br>" + sec_name;
+                  }
+  
+                  // remove the border line
+                  if (i > 0) {
+                    cell.style.borderTop = "None";
+                  }
+                  if (i < end_time - start_time - 1) {
+                    cell.style.borderBottom = "None";
+                  }
+                }
+              }
+            }
+          }
+          
         })
       };
     }
