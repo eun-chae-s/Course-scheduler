@@ -1,8 +1,6 @@
-// August 16 To-do list
-// 1. alert function() for conflicted course (even 1 hr different also) (done)
-// 2. different color for the tutorial (done)
+// To-do list
+
 // 3. add delete function
-// 4. display all the added section 
 // 5. coloring for the Y course
 // 6. deal with the course that does not have a time
 // 7. api call 바꾸기
@@ -314,6 +312,18 @@ function findSection() {
           }
           
         })
+        
+        // add to the "Added Courses" section
+        var added_courses = document.getElementById('selected_courses');
+        var new_card = document.createElement('div');
+        var text = course_code + " " + sem.toUpperCase()[0] + " " + sec_name;
+        new_card.innerHTML = text;
+        var delete_button = document.createElement("button");
+        delete_button.innerHTML = "&#10006;";
+        new_card.appendChild(delete_button);
+        new_card.className = "selected";
+
+        added_courses.appendChild(new_card);
       };
     }
 }
