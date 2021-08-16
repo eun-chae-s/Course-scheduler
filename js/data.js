@@ -243,13 +243,14 @@ function findSection() {
 
         // 3. section schedule array
         var schedule = section.schedule;
+        var alert_called = false;
         schedule.forEach(time => {
           var day = time.Day;
           var start = time.Start;
           var end = time.End;
           var start_time = parseInt(start.slice(0, start.indexOf(":")));
           var end_time = parseInt(end.slice(0, end.indexOf(":")));
-          var alert_called = false;
+          
           for (let i = 0; i < end_time - start_time; i++) {
             if (sem != "both") {
               var t = document.getElementById(sem);
@@ -314,16 +315,19 @@ function findSection() {
         })
         
         // add to the "Added Courses" section
-        var added_courses = document.getElementById('selected_courses');
-        var new_card = document.createElement('div');
-        var text = course_code + " " + sem.toUpperCase()[0] + " " + sec_name;
-        new_card.innerHTML = text;
-        var delete_button = document.createElement("button");
-        delete_button.innerHTML = "&#10006;";
-        new_card.appendChild(delete_button);
-        new_card.className = "selected";
+        if (alert_called == false) {
+          var added_courses = document.getElementById('selected_courses');
+          var new_card = document.createElement('div');
+          var text = course_code + " " + sem.toUpperCase()[0] + " " + sec_name;
+          new_card.innerHTML = text;
+          var delete_button = document.createElement("button");
+          delete_button.innerHTML = "&#10006;";
+          new_card.appendChild(delete_button);
+          new_card.className = "selected";
 
-        added_courses.appendChild(new_card);
+          added_courses.appendChild(new_card);
+        }
+        
       };
     }
 }
