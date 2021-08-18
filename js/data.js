@@ -1,8 +1,6 @@
 // To-do list
 
-// 3. add delete function (done)
-// 5. coloring for the Y course (done)
-// 6. deal with the course that does not have a time
+// 6. deal with the course that does not have a time (done)
 // 7. api call 바꾸기
 // 8. save into pdf file function
 
@@ -20,7 +18,7 @@ let buttons = {};
 let added = {};
 
 // Clean JSON file
-$.getJSON("data/mat_courses.json", function(json) {
+$.getJSON("data/csc_courses.json", function(json) {
   console.log(json);
   for (var course in json) {
     let lectures = [];
@@ -249,129 +247,132 @@ function findSection() {
           var day = time.Day;
           var start = time.Start;
           var end = time.End;
-          var start_time = parseInt(start.slice(0, start.indexOf(":")));
-          var end_time = parseInt(end.slice(0, end.indexOf(":")));
+          if (day != undefined || start != null || end != null) {
+            var start_time = parseInt(start.slice(0, start.indexOf(":")));
+            var end_time = parseInt(end.slice(0, end.indexOf(":")));
           
-          // Check any conflicted schedule
-          for (let i = 0; i < end_time - start_time; i++) {
-            if (sem != "year") {
-              var t = document.getElementById(sem);
-              var cell = t.rows[start_time - 7 + i].cells[schedule_days[day]];
-              if (cell.bgColor != "") {
-                alert("Conflicted schedule! Choose another section!");
-                alert_called = true;
-                break;
-              }
-            } else {
-              var fall = document.getElementById("fall");
-              var winter = document.getElementById("winter");
-
-              var cell1 = fall.rows[start_time - 7 + i].cells[schedule_days[day]];
-              var cell2 = winter.rows[start_time - 7 + i].cells[schedule_days[day]];
-              if (cell1.bgColor != "" || cell2.bgColor != "") {
-                alert("Conflicted schedule! Choose another section!");
-                alert_called = true;
-                break;
-              }
-            }
-          }
-
-          // Coloring
-          if (alert_called == false) {
+            // Check any conflicted schedule
             for (let i = 0; i < end_time - start_time; i++) {
               if (sem != "year") {
                 var t = document.getElementById(sem);
                 var cell = t.rows[start_time - 7 + i].cells[schedule_days[day]];
-                // if (cell.bgColor != "") {
-                //   alert("Conflicted schedule! Choose another section!");
-                // } else {
-                if (id.includes("lec")) {
-                  cell.bgColor = "#fff0f8";
-                } else if (id.includes("tut")) {
-                  cell.bgColor = "#e6eeff";  // tutorial section
-                } else {
-                  cell.bgColor = "#c3fc86";
+                if (cell.bgColor != "") {
+                  alert("Conflicted schedule! Choose another section!");
+                  alert_called = true;
+                  break;
                 }
-                
-                if (end_time - start_time > 1) {
-                  if (i == 0) {
-                    cell.innerText = course_code;
-                  } 
-                  if (i == 1) {
-                    cell.innerText = sec_name;
-                  }
-                } else {
-                  cell.innerHTML = course_code + "<br>" + sec_name;
-                }
-
-                // remove the border line
-                if (i > 0) {
-                  cell.style.borderTop = "None";
-                }
-                if (i < end_time - start_time - 1) {
-                  cell.style.borderBottom = "None";
-                }
-
-                // add the position of cells that was colored;
-                if (added[id.slice(4)] == null) {
-                  added[id.slice(4)] = [cell];
-                } else {
-                  added[id.slice(4)].push(cell);
-                }
-                
-                //}
-              } else {  
-                // for the year course 
+              } else {
                 var fall = document.getElementById("fall");
                 var winter = document.getElementById("winter");
 
                 var cell1 = fall.rows[start_time - 7 + i].cells[schedule_days[day]];
                 var cell2 = winter.rows[start_time - 7 + i].cells[schedule_days[day]];
-                if (id.includes("lec")) {
-                  cell1.bgColor = "#fff0f8";
-                  cell2.bgColor = "#fff0f8";
-                } else if (id.includes("tut")) {
-                  cell1.bgColor = "#e6eeff";  // tutorial section
-                  cell2.bgColor = "#e6eeff";
-                } else {
-                  cell1.bgColor = "#c3fc86";  // activity section
-                  cell2.bgColor = "#c3fc86";
+                if (cell1.bgColor != "" || cell2.bgColor != "") {
+                  alert("Conflicted schedule! Choose another section!");
+                  alert_called = true;
+                  break;
                 }
-                
-                if (end_time - start_time > 1) {
-                  if (i == 0) {
-                    cell1.innerText = course_code;
-                    cell2.innerText = course_code;
-                  } 
-                  if (i == 1) {
-                    cell1.innerText = sec_name;
-                    cell2.innerText = sec_name;
+              }
+            }
+
+            // Coloring
+            if (alert_called == false) {
+              for (let i = 0; i < end_time - start_time; i++) {
+                if (sem != "year") {
+                  var t = document.getElementById(sem);
+                  var cell = t.rows[start_time - 7 + i].cells[schedule_days[day]];
+                  // if (cell.bgColor != "") {
+                  //   alert("Conflicted schedule! Choose another section!");
+                  // } else {
+                  if (id.includes("lec")) {
+                    cell.bgColor = "#fff0f8";
+                  } else if (id.includes("tut")) {
+                    cell.bgColor = "#e6eeff";  // tutorial section
+                  } else {
+                    cell.bgColor = "#c3fc86";
                   }
-                } else {
-                  cell1.innerHTML = course_code + "<br>" + sec_name;
-                  cell2.innerHTML = course_code + "<br>" + sec_name;
-                }
+                  
+                  if (end_time - start_time > 1) {
+                    if (i == 0) {
+                      cell.innerText = course_code;
+                    } 
+                    if (i == 1) {
+                      cell.innerText = sec_name;
+                    }
+                  } else {
+                    cell.innerHTML = course_code + "<br>" + sec_name;
+                  }
 
-                // remove the border line
-                if (i > 0) {
-                  cell1.style.borderTop = "None";
-                  cell2.style.borderTop = "None";
-                }
-                if (i < end_time - start_time - 1) {
-                  cell1.style.borderBottom = "None";
-                  cell2.style.borderBottom = "None";
-                }
+                  // remove the border line
+                  if (i > 0) {
+                    cell.style.borderTop = "None";
+                  }
+                  if (i < end_time - start_time - 1) {
+                    cell.style.borderBottom = "None";
+                  }
 
-                // add the position of cells that was colored;
-                if (added[id.slice(4)] == null) {
-                  added[id.slice(4)] = [cell1, cell2];
-                } else {
-                  added[id.slice(4)].push(cell1);
-                  added[id.slice(4)].push(cell2);
+                  // add the position of cells that was colored;
+                  if (added[id.slice(4)] == null) {
+                    added[id.slice(4)] = [cell];
+                  } else {
+                    added[id.slice(4)].push(cell);
+                  }
+                  
+                  //}
+                } else {  
+                  // for the year course 
+                  var fall = document.getElementById("fall");
+                  var winter = document.getElementById("winter");
+
+                  var cell1 = fall.rows[start_time - 7 + i].cells[schedule_days[day]];
+                  var cell2 = winter.rows[start_time - 7 + i].cells[schedule_days[day]];
+                  if (id.includes("lec")) {
+                    cell1.bgColor = "#fff0f8";
+                    cell2.bgColor = "#fff0f8";
+                  } else if (id.includes("tut")) {
+                    cell1.bgColor = "#e6eeff";  // tutorial section
+                    cell2.bgColor = "#e6eeff";
+                  } else {
+                    cell1.bgColor = "#c3fc86";  // activity section
+                    cell2.bgColor = "#c3fc86";
+                  }
+                  
+                  if (end_time - start_time > 1) {
+                    if (i == 0) {
+                      cell1.innerText = course_code;
+                      cell2.innerText = course_code;
+                    } 
+                    if (i == 1) {
+                      cell1.innerText = sec_name;
+                      cell2.innerText = sec_name;
+                    }
+                  } else {
+                    cell1.innerHTML = course_code + "<br>" + sec_name;
+                    cell2.innerHTML = course_code + "<br>" + sec_name;
+                  }
+
+                  // remove the border line
+                  if (i > 0) {
+                    cell1.style.borderTop = "None";
+                    cell2.style.borderTop = "None";
+                  }
+                  if (i < end_time - start_time - 1) {
+                    cell1.style.borderBottom = "None";
+                    cell2.style.borderBottom = "None";
+                  }
+
+                  // add the position of cells that was colored;
+                  if (added[id.slice(4)] == null) {
+                    added[id.slice(4)] = [cell1, cell2];
+                  } else {
+                    added[id.slice(4)].push(cell1);
+                    added[id.slice(4)].push(cell2);
+                  }
                 }
               }
             }
           }
+          
           
         })
         
